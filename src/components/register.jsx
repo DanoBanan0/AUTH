@@ -1,27 +1,27 @@
 import { useState } from "react";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 
 export default function Register() {
     const router = useRouter();
     const [userName, setUsername] = useState();
     const [password, setPassword] = useState();
-    const [email, setEmail] =useState();
+    const [email, setEmail] = useState();
 
     const handleRegister = (e) => {
-        e.preventDefault(); // Dontm reload the page
+        e.preventDefault(); // Don't reload the page
 
         // Validate user input
-        const existingUsers = JSON.parse(localStorage.getItem('users'))  || [];
+        const existingUsers = JSON.parse(localStorage.getItem('users')) || [];
         const userExists = existingUsers.find((user) => user.userName === userName);
 
-        if(userExists) {
+        if (userExists) {
             alert("El usurario '${userName}' ya existe");
             return;
         }
 
         // Create new user object
-        const newUsers = [...existingUsers, {userName, password, email}];
-        localStorage.setItem('users',JSON.stringify(newUsers));
+        const newUsers = [...existingUsers, { userName, password, email }];
+        localStorage.setItem('users', JSON.stringify(newUsers));
 
         alert("Usuario Registrado exitosamente!");
         router.push('/login'); // Redirect to login page
@@ -36,6 +36,8 @@ export default function Register() {
                 <input type="passwords" placeholder="" value={password} onChange={(e) => setPassword(e.target.value)} required />
                 <br /><br />
                 <input type="email" placeholder="usuario@gmail.com" value={email} onChange={(e) => setEmail(e.target.value)} required />
+                <br /><br />
+                <button type="submit">Register</button>
             </form>
         </div>
     );
